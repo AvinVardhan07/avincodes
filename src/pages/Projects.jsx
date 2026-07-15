@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Reveal from '../components/Reveal';
 import TiltedMarquee from '../components/TiltedMarquee';
+import SpecularButton from '../components/SpecularButton';
 
 export default function Projects() {
   const [filter, setFilter] = useState('All');
@@ -104,19 +105,24 @@ export default function Projects() {
       {/* Filter Navigation */}
       <Reveal delay={100}>
         <div className='flex flex-wrap justify-center gap-3 mb-12'>
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setFilter(cat)}
-              className={`px-4 py-1.5 border rounded-full text-[10px] uppercase tracking-widest font-bold transition-all duration-300 cursor-pointer ${
-                filter === cat
-                  ? 'bg-blue-600 border-blue-500 text-black shadow-[0_0_15px_rgba(37,99,235,0.4)]'
-                  : 'bg-white/5 border-white/10 text-gray-400 hover:border-white/30 hover:text-white'
-              }`}
-            >
-              {cat}
-            </button>
-          ))}
+          {categories.map((cat) => {
+            const isActive = filter === cat;
+            return (
+              <SpecularButton
+                key={cat}
+                onClick={() => setFilter(cat)}
+                size="sm"
+                radius={9999}
+                baseColor={isActive ? '#1e40af' : '#09090b'}
+                lineColor={isActive ? '#60a5fa' : '#27272a'}
+                textColor={isActive ? '#ffffff' : '#a1a1aa'}
+                intensity={isActive ? 1.2 : 0.4}
+                className="font-medium tracking-widest text-[10px] uppercase"
+              >
+                {cat}
+              </SpecularButton>
+            );
+          })}
         </div>
       </Reveal>
 
@@ -140,12 +146,17 @@ export default function Projects() {
                 </div>
               </div>
               <div className='p-5 pt-0 space-y-2.5 w-full'>
-                <button
+                <SpecularButton
                   onClick={() => setActiveModal(p)}
-                  className='w-full text-center py-2 bg-blue-600/10 border border-blue-500/20 rounded-lg text-[9px] font-bold uppercase tracking-widest text-blue-400 hover:bg-blue-600 hover:text-black transition-all cursor-pointer'
+                  size="sm"
+                  radius={8}
+                  baseColor="#1e40af"
+                  lineColor="#60a5fa"
+                  textColor="#ffffff"
+                  className="w-full font-medium uppercase tracking-widest text-[9px]"
                 >
                   View Case Study
-                </button>
+                </SpecularButton>
                 <a
                   href={p.link}
                   target='_blank'
@@ -227,12 +238,17 @@ export default function Projects() {
                 >
                   Source Code
                 </a>
-                <button
+                <SpecularButton
                   onClick={() => setActiveModal(null)}
-                  className='flex-1 py-3 bg-white/5 border border-white/10 hover:bg-white/10 rounded-lg text-[10px] text-gray-300 font-bold uppercase tracking-widest transition cursor-pointer'
+                  size="sm"
+                  radius={8}
+                  baseColor="#09090b"
+                  lineColor="#27272a"
+                  textColor="#a1a1aa"
+                  className="flex-1 font-medium uppercase tracking-widest text-[10px]"
                 >
                   Close
-                </button>
+                </SpecularButton>
               </div>
             </div>
           </div>

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Reveal from '../components/Reveal';
+import SpecularButton from '../components/SpecularButton';
 
 export default function Contact() {
   const [formData, setFormData] = useState({ name: '', email: '', projectType: 'AI Automation', message: '' });
@@ -175,13 +176,19 @@ export default function Contact() {
                 <p className='text-xs text-green-400 text-center font-bold'>Inquiry received! We will connect shortly.</p>
               )}
 
-              <button
+              <SpecularButton
                 type='submit'
                 disabled={status === 'sending'}
-                className='w-full bg-blue-600 hover:bg-blue-500 py-3 rounded-lg font-bold uppercase tracking-widest text-[10px] text-black transition disabled:bg-blue-800 cursor-pointer'
+                size="md"
+                radius={8}
+                baseColor="#1e40af"
+                lineColor="#60a5fa"
+                textColor="#ffffff"
+                intensity={1.2}
+                className="w-full font-medium uppercase tracking-widest text-[10px] !py-3"
               >
                 Launch Inquiry
-              </button>
+              </SpecularButton>
             </form>
           </div>
         </Reveal>

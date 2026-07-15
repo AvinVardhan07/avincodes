@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useRouter } from '../context/RouterContext';
 import Reveal from '../components/Reveal';
 import TiltedMarquee from '../components/TiltedMarquee';
+import SpecularButton from '../components/SpecularButton';
 
 export default function ExperiencePage() {
   const { navigate } = useRouter();
@@ -119,22 +120,29 @@ export default function ExperiencePage() {
         <div className='grid md:grid-cols-5 gap-8 items-start'>
           {/* Timeline Left: Role selection buttons */}
           <div className='md:col-span-2 space-y-3'>
-            {experienceData.map((item, idx) => (
-              <Reveal key={item.id} delay={idx * 100}>
-                <button
-                  onClick={() => setExpandedId(item.id)}
-                  className={`w-full text-left p-4 rounded-xl border transition-all duration-300 cursor-pointer block ${
-                    expandedId === item.id
-                      ? 'bg-blue-600/10 border-blue-500 text-white shadow-[0_0_15px_rgba(37,99,235,0.15)]'
-                      : 'bg-zinc-900/60 border-white/5 text-gray-400 hover:border-white/10 hover:text-white'
-                  }`}
-                >
-                  <span className='text-[9px] font-bold text-blue-400 block mb-1 font-mono'>{item.period}</span>
-                  <div className='font-bold text-sm text-white'>{item.role}</div>
-                  <div className='text-xs text-gray-500 mt-0.5'>{item.company}</div>
-                </button>
-              </Reveal>
-            ))}
+            {experienceData.map((item, idx) => {
+              const isActive = expandedId === item.id;
+              return (
+                <Reveal key={item.id} delay={idx * 100}>
+                  <SpecularButton
+                    onClick={() => setExpandedId(item.id)}
+                    size="md"
+                    radius={12}
+                    baseColor={isActive ? '#1e40af' : '#09090b'}
+                    lineColor={isActive ? '#60a5fa' : '#27272a'}
+                    textColor={isActive ? '#ffffff' : '#a1a1aa'}
+                    intensity={isActive ? 1.0 : 0.4}
+                    className="w-full text-left !p-4"
+                  >
+                    <div className="w-full text-left">
+                      <span className='text-[9px] font-bold text-blue-400 block mb-1 font-mono'>{item.period}</span>
+                      <div className={`font-semibold text-sm transition-colors duration-300 ${isActive ? 'text-white' : 'text-zinc-400'}`}>{item.role}</div>
+                      <div className='text-xs text-gray-500 mt-0.5'>{item.company}</div>
+                    </div>
+                  </SpecularButton>
+                </Reveal>
+              );
+            })}
           </div>
 
           {/* Timeline Right: Details of selected role */}
@@ -213,12 +221,17 @@ export default function ExperiencePage() {
                   <h3 className='text-lg font-bold mb-3 text-white group-hover:text-blue-400 transition duration-300'>{srv.title}</h3>
                   <p className='text-xs text-gray-400 leading-relaxed mb-6'>{srv.desc}</p>
                 </div>
-                <button
+                <SpecularButton
                   onClick={() => navigate('/contact')}
-                  className='text-[9px] uppercase tracking-widest font-bold text-blue-400 hover:text-white transition duration-300 cursor-pointer block pt-2'
+                  size="sm"
+                  radius={8}
+                  baseColor="#1e40af"
+                  lineColor="#60a5fa"
+                  textColor="#ffffff"
+                  className="font-medium uppercase tracking-widest text-[9px] mt-4"
                 >
                   Discuss Project →
-                </button>
+                </SpecularButton>
               </div>
             </Reveal>
           ))}
